@@ -30,6 +30,7 @@ private:
     this->degrees =
         this->get_parameter("degrees").get_parameter_value().get<int>();
 
+    // node acknowledgement
     RCLCPP_INFO_ONCE(this->get_logger(),
                      "Parameters (obstacle : %f, degrees : %d)", this->obstacle,
                      this->degrees);
@@ -66,6 +67,7 @@ private:
     double delta_dist = this->obstacle - this->min_dist;
     double delta_angl = this->degrees - this->yaw;
 
+    // node feedback
     RCLCPP_INFO_THROTTLE(this->get_logger(), *clock, 1000,
                          "Delta (distance : %f, angle : %f)", delta_dist,
                          delta_angl);
@@ -84,6 +86,7 @@ private:
       message.angular.z = 0.0;
     }
 
+    // node feedback
     RCLCPP_INFO_THROTTLE(this->get_logger(), *clock, 1000,
                          "Velocity ( linear : %f, angular : %f)",
                          message.linear.x, message.angular.z);
