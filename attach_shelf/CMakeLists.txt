@@ -18,9 +18,20 @@ find_package(attach_shelf_interface REQUIRED)
 add_executable(pre_approach_node src/pre_approach.cpp)
 ament_target_dependencies(pre_approach_node rclcpp geometry_msgs sensor_msgs nav_msgs)
 
+add_executable(pre_approach_v2_node src/pre_approach_v2.cpp)
+ament_target_dependencies(pre_approach_v2_node rclcpp geometry_msgs sensor_msgs nav_msgs attach_shelf_interface)
+
+add_executable(approach_service_node src/approach_service_server.cpp)
+ament_target_dependencies(approach_service_node rclcpp tf2_ros geometry_msgs sensor_msgs nav_msgs attach_shelf_interface)
+
 # install
-install(TARGETS pre_approach_node DESTINATION lib/${PROJECT_NAME})
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
+install(TARGETS 
+	pre_approach_node
+	pre_approach_v2_node
+	approach_service_node
+	DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch rviz DESTINATION share/${PROJECT_NAME}/)
 
 
 if(BUILD_TESTING)
