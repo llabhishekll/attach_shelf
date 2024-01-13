@@ -31,10 +31,22 @@ target_compile_definitions(attach_client_node PRIVATE "COMPOSITION_BUILDING_DLL"
 ament_target_dependencies(attach_client_node rclcpp rclcpp_components attach_shelf_interface)
 rclcpp_components_register_nodes(attach_client_node "my_components::AttachClient")
 
+add_library(attach_server_node SHARED src/attach_server.cpp)
+target_compile_definitions(attach_server_node PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(attach_server_node rclcpp rclcpp_components tf2_ros tf2_geometry_msgs geometry_msgs sensor_msgs nav_msgs attach_shelf_interface)
+rclcpp_components_register_nodes(attach_server_node "my_components::AttachServer")
+
+# build
+add_executable(approach_service_server_node src/approach_service_server.cpp)
+target_link_libraries(approach_service_server_node attach_server_node)
+ament_target_dependencies(approach_service_server_node rclcpp)
+
 # compiler components target location
 install(TARGETS
   pre_approach_node
   attach_client_node
+  attach_server_node
+  approach_service_server_node
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
