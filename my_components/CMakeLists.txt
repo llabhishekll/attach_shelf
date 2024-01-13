@@ -26,10 +26,15 @@ target_compile_definitions(pre_approach_node PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(pre_approach_node rclcpp rclcpp_components geometry_msgs sensor_msgs nav_msgs)
 rclcpp_components_register_nodes(pre_approach_node "my_components::PreApproach")
 
+add_library(attach_client_node SHARED src/attach_client.cpp)
+target_compile_definitions(attach_client_node PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(attach_client_node rclcpp rclcpp_components attach_shelf_interface)
+rclcpp_components_register_nodes(attach_client_node "my_components::AttachClient")
 
 # compiler components target location
 install(TARGETS
   pre_approach_node
+  attach_client_node
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
