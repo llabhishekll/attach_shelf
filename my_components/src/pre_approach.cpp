@@ -9,7 +9,7 @@
 namespace my_components {
 
 PreApproach::PreApproach(const rclcpp::NodeOptions &options)
-    : Node("rb1_control_node", options), obstacle{0.3}, degrees{-90},
+    : Node("pre_approach_node", options), obstacle{0.3}, degrees{-90},
       dist_done{false}, angl_done{false} {
 
   // ros objects
