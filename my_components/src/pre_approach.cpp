@@ -87,6 +87,11 @@ void PreApproach::timer_robot_control_callback() {
 
   // publish velocity
   publisher_cmd_vel->publish(message);
+
+  if (this->dist_done && this->angl_done) {
+    this->timer_robot_control.reset();
+    RCLCPP_INFO_ONCE(this->get_logger(), "Robot ready for final approach");
+  }
 }
 
 } // namespace my_components
